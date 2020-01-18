@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-firebase-messaging-extension",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Cordova plugin to extend Firebase messaging to a project with UrbanAirship and Intercom",
   "license": "MIT",
   "cordova": {
