@@ -28,7 +28,7 @@ https://github.com/urbanairship/urbanairship-cordova/blob/master/src/android/bui
 `ionic cordova build android --verbose --buildConfig=build.json -- -- --gradleArg=-PuaSkipApplyGoogleServicesPlugin=false`
 
 ##### Intercom 
-<preference name="intercom-android-push-type" value="FCM-WITHOUT-BUILD-PLUGIN"/>
+`<preference name="intercom-android-push-type" value="FCM-WITHOUT-BUILD-PLUGIN"/>`
 
 # Solution for cordova-plugin-intercom 7.1 and urbanairship-cordova 7.6
 [Original plugin](https://github.com/kohofinancial/cordova-plugin-firebase-messaging-extension)
