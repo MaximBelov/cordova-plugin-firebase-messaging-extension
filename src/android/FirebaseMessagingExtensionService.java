@@ -1,11 +1,11 @@
 package ca.koho.cordova.plugin.firebase.messaging;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
-import com.urbanairship.push.fcm.AirshipFirebaseInstanceIdService;
-import com.urbanairship.push.fcm.AirshipFirebaseMessagingService;
+import com.urbanairship.push.fcm.AirshipFirebaseIntegration;
 
 import java.util.Map;
 
@@ -15,18 +15,21 @@ public class FirebaseMessagingExtensionService extends FirebaseMessagingService 
     private final IntercomPushClient intercomPushClient = new IntercomPushClient();
     private static final String TAG = "FirebaseMessagingExtensionService";
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onCreate() {
         Log.d(TAG, "onCreate");
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onNewToken(String token) {
         Log.d(TAG, "onNewToken");
         intercomPushClient.sendTokenToIntercom(getApplication(), token);
-        AirshipFirebaseInstanceIdService.processTokenRefresh(getApplicationContext());
+        AirshipFirebaseIntegration.processNewToken(getApplicationContext());
     }
 
+    @SuppressLint("LongLogTag")
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
        Log.d(TAG, "onMessageReceived");
@@ -34,7 +37,7 @@ public class FirebaseMessagingExtensionService extends FirebaseMessagingService 
         if (intercomPushClient.isIntercomPush(message)) {
             intercomPushClient.handlePush(getApplication(), message);
         } else {
-            AirshipFirebaseMessagingService.processMessageSync(getApplicationContext(), remoteMessage);
+            AirshipFirebaseIntegration.processMessageSync(getApplicationContext(), remoteMessage);
         }
     }
 }
