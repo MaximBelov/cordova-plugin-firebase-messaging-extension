@@ -26,17 +26,17 @@ public class FirebaseMessagingExtensionService extends FirebaseMessagingService 
     public void onNewToken(String token) {
         Log.d(TAG, "onNewToken");
         intercomPushClient.sendTokenToIntercom(getApplication(), token);
-        AirshipFirebaseIntegration.processNewToken(getApplicationContext());
+        AirshipFirebaseIntegration.processNewToken(getApplicationContext(), token);
     }
 
     @SuppressLint("LongLogTag")
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
-       Log.d(TAG, "onMessageReceived");
-        Map message = remoteMessage.getData();
-        if (intercomPushClient.isIntercomPush(message)) {
-            intercomPushClient.handlePush(getApplication(), message);
-        } else {
+        Log.d(TAG, "onMessageReceived");
+        Map<String, String> data = remoteMessage.getData();
+        if (intercomPushClient.isIntercomPush(data)) {
+            intercomPushClient.handlePush(getApplication(), data);
+        } else if (AirshipFirebaseIntegration.isAirshipPush(remoteMessage)) {
             AirshipFirebaseIntegration.processMessageSync(getApplicationContext(), remoteMessage);
         }
     }
