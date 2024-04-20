@@ -9,7 +9,7 @@ It can be easily modified to provide the same service for other push providers.
  
 Plugins: 
 - cordova-plugin-intercom
-- urbanairship-cordova
+- @ua/cordova-airship
 - cordova-plugin-firebasex
 
 ## Update config.xml 
