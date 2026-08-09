@@ -23,9 +23,14 @@ This plugin extends a Firebase messaging service for routing tokens and messages
 
 It can be easily modified to provide the same service for other push providers. 
 
-# You should use it with Intercom, Airship, Firebasex
- 
-Plugins: 
+## Installation
+
+```bash
+cordova plugin add cordova-plugin-firebase-messaging-extension
+```
+
+## Required companion plugins
+
 - cordova-plugin-intercom
 - @ua/cordova-airship
 - cordova-plugin-firebasex
