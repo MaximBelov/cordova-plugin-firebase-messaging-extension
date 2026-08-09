@@ -36,7 +36,7 @@ public class FirebaseMessagingExtensionService extends FirebaseMessagingService 
         Map<String, String> data = remoteMessage.getData();
         if (intercomPushClient.isIntercomPush(data)) {
             intercomPushClient.handlePush(getApplication(), data);
-        } else if (AirshipFirebaseIntegration.isAirshipPush(remoteMessage)) {
+        } else if (AirshipFirebaseIntegration.INSTANCE.isAirshipPush(remoteMessage)) {
             AirshipFirebaseIntegration.processMessageSync(getApplicationContext(), remoteMessage);
         }
     }
