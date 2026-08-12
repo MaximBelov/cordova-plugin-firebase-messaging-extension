@@ -21,5 +21,22 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
         run: npm i
+      # Every push to master reaches this job, but only a release commit changes the version.
+      # Without this check the publish fails on npm's "cannot publish over the previously
+      # published versions", which reads as a broken pipeline rather than as nothing to publish.
+      - name: Check whether this version is new
+        id: version
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+
+          if npm view "$NAME@$VERSION" version > /dev/null 2>&1; then
+            echo "new=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::$NAME@$VERSION is already published; nothing to do."
+          else
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Publish
-        run: npm publish
+        if: steps.version.outputs.new == 'true'
+        run: npm publish --access public --tag latest
